@@ -102,33 +102,50 @@
     </div>
 
     <script>
+       <script>
         function startCountdown() {
             const countdownElement = document.getElementById("countdown");
+            
+            // 1. Kiểm tra xem trình duyệt đã lưu thời gian bắt đầu chưa
+            let startTime = localStorage.getItem("xps_start_time");
+            const now = new Date().getTime();
+            const twentyFourHours = 24 * 60 * 60 * 1000; // Đổi 24h ra mili-giây
 
+            // Nếu vào lần đầu hoặc đã quá hạn 24h cũ -> Tự động reset mốc 24h mới
+            if (!startTime || (now - startTime > twentyFourHours)) {
+                localStorage.setItem("xps_start_time", now);
+                startTime = now;
+            }
+
+            // 2. Chạy vòng lặp trừ lùi thời gian từng giây
             setInterval(function() {
-                const now = new Date();
-                
-                // Tính thời gian đến 12h đêm hôm nay (24:00:00)
-                const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
-                const diff = midnight - now;
+                const currentTime = new Date().getTime();
+                const timePassed = currentTime - startTime;
+                const timeLeft = twentyFourHours - timePassed;
 
-                // Quy đổi ra Giờ, Phút, Giây
-                let hours = Math.floor(diff / (1000 * 60 * 60));
-                let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+                if (timeLeft <= 0) {
+                    countdownElement.innerText = "00:00:00";
+                    return;
+                }
 
-                // Thêm số 0 phía trước nếu số nhỏ hơn 10 (ví dụ: 09 thay vì 9)
+                // Quy đổi thời gian còn lại ra Giờ:Phút:Giây
+                let hours = Math.floor(timeLeft / (1000 * 60 * 60));
+                let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+                // Thêm số 0 phía trước nếu số nhỏ hơn 10 (Ví dụ: 09:05:01)
                 hours = hours < 10 ? "0" + hours : hours;
                 minutes = minutes < 10 ? "0" + minutes : minutes;
                 seconds = seconds < 10 ? "0" + seconds : seconds;
 
-                // Hiển thị lên màn hình
+                // Bắn thời gian ra màn hình hiển thị
                 countdownElement.innerText = hours + ":" + minutes + ":" + seconds;
             }, 1000);
         }
 
-        // Kích hoạt đồng hồ chạy ngay khi mở trang web
+        // Kích hoạt cho đồng hồ chạy ngay khi mở trang web
         window.onload = startCountdown;
+    </script>
     </script>
 
 </body>
