@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Lấy Mã Điểm Danh - XPS</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            /* Đường link ảnh nền của bạn */
+            background: url('image_9f2124.jpg') no-repeat center center fixed;
+            background-size: cover;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            border: 3px solid #ff7675;
+        }
+
+        .title {
+            color: #d63031;
+            font-size: 1.6rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .code-display-box {
+            background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+            padding: 20px;
+            border-radius: 12px;
+            border: 2px dashed #ff7675;
+            margin: 20px 0;
+        }
+
+        .code-text {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #2d3436;
+            letter-spacing: 2px;
+        }
+
+        /* KHU VỰC ĐỒNG HỒ ĐẾM NGƯỢC */
+        .countdown-box {
+            background: #2d3436;
+            color: #1dd1a1;
+            font-size: 1.2rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: inline-block;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        .countdown-time {
+            color: #ffffffff;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.3rem;
+            margin-left: 5px;
+        }
+
+        .note {
+            color: #636e72;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2 class="title">✨ MÃ CODE BÀI HỌC HÔM NAY ✨</h2>
+        
+        <div class="countdown-box">
+            ⏳ Mã hết hạn sau:<span id="countdown" class="countdown-time">24:00:00</span>
+        </div>
+
+        <div class="code-display-box">
+            <div class="code-text">ancowmchx</div>
+        </div>
+
+        <p class="note">Chúc các bạn học sinh <b>XPS</b> học tốt, thi tốt và đạt điểm cao! Hãy copy mã phía trên và nhanh chóng quay lại trang web khóa học để mở khóa bài học nhé, mã sẽ đổi sau khi hết thời gian! ❤️</p>
+    </div>
+
+    <script>
+        function startCountdown() {
+            const countdownElement = document.getElementById("countdown");
+
+            setInterval(function() {
+                const now = new Date();
+                
+                // Tính thời gian đến 12h đêm hôm nay (24:00:00)
+                const midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+                const diff = midnight - now;
+
+                // Quy đổi ra Giờ, Phút, Giây
+                let hours = Math.floor(diff / (1000 * 60 * 60));
+                let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                let seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+                // Thêm số 0 phía trước nếu số nhỏ hơn 10 (ví dụ: 09 thay vì 9)
+                hours = hours < 10 ? "0" + hours : hours;
+                minutes = minutes < 10 ? "0" + minutes : minutes;
+                seconds = seconds < 10 ? "0" + seconds : seconds;
+
+                // Hiển thị lên màn hình
+                countdownElement.innerText = hours + ":" + minutes + ":" + seconds;
+            }, 1000);
+        }
+
+        // Kích hoạt đồng hồ chạy ngay khi mở trang web
+        window.onload = startCountdown;
+    </script>
+
+</body>
+</html>
